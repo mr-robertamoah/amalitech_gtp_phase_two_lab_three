@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Sharing App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Photo Sharing App</h1>
+        </header>
+        
+        <div class="upload-section">
+            <h2>Upload an Image</h2>
+            <div id="errorMessage" class="error"></div>
+            
+            <div class="file-input-container">
+                <input type="file" id="uploadFile" class="file-input" accept="image/*">
+                <label for="uploadFile" class="file-label">Choose an image</label>
+                <button id="uploadButton" onclick="uploadImage()" disabled>Upload</button>
+            </div>
+            
+            <div id="fileName" class="file-name">No file selected</div>
+            <div id="uploadProgress" style="display: none;">
+                <progress value="0" max="100" id="progressBar" style="width: 100%;"></progress>
+            </div>
+            
+            <div id="imagePreviewContainer" class="image-preview-container">
+                <img id="imagePreview" class="image-preview" src="" alt="Image Preview">
+                <button id="removeImage" class="remove-image" aria-label="Remove image">×</button>
+            </div>
+        </div>
+        
+        <div class="gallery-section">
+            <h2>Gallery</h2>
+            <div id="loading" class="loading">Loading images...</div>
+            <div id="gallery" class="gallery"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
