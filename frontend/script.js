@@ -1,16 +1,53 @@
 // File selection handling
 document.getElementById("uploadFile").addEventListener("change", function(e) {
     const file = e.target.files[0];
+    handleFileSelection(file);
+});
+
+// Drag and drop functionality
+const dropZone = document.body;
+
+dropZone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.add('drag-over');
+});
+
+dropZone.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.remove('drag-over');
+});
+
+dropZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.remove('drag-over');
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        const file = files[0];
+        const fileInput = document.getElementById("uploadFile");
+        fileInput.files = files;
+        handleFileSelection(file);
+    }
+});
+
+function handleFileSelection(file) {
     const fileNameElement = document.getElementById("fileName");
     const uploadButton = document.getElementById("uploadButton");
     const imagePreviewContainer = document.getElementById("imagePreviewContainer");
     const imagePreview = document.getElementById("imagePreview");
     
     if (file) {
+        if (!file.type.startsWith("image/")) {
+            alert("Please select an image file.");
+            return;
+        }
+        
         fileNameElement.textContent = `Selected: ${file.name}`;
         uploadButton.disabled = false;
         
-        // Display image preview
         const reader = new FileReader();
         reader.onload = function(event) {
             imagePreview.src = event.target.result;
@@ -22,7 +59,7 @@ document.getElementById("uploadFile").addEventListener("change", function(e) {
         uploadButton.disabled = true;
         imagePreviewContainer.style.display = "none";
     }
-});
+}
 
 // Handle image removal
 document.getElementById("removeImage").addEventListener("click", function() {
